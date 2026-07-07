@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — BrainTree HR</title>
+<link rel="icon" type="image/webp" href="assets/logo-red2.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="pages.css">
+<link rel="stylesheet" href="skeleton-loader.css">
+</head>
+<body>
+<div id="skelLoader" class="skel-light">
+  <div class="skel-nav">
+    <div class="skel-brand"></div>
+    <div class="skel-navlinks">
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+    </div>
+    <div class="skel-cta"></div>
+  </div>
+  <div class="skel-main">
+    <div class="skel-eyebrow"></div>
+    <div class="skel-h1"></div>
+    <div class="skel-h1 skel-h1-2"></div>
+    <div class="skel-p"></div>
+    <div class="skel-p short"></div>
+    <div class="skel-row">
+      <div class="skel-card"></div>
+      <div class="skel-card"></div>
+      <div class="skel-card"></div>
+    </div>
+  </div>
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" rx="20" fill="#6B43E8"/>
+    <g transform="translate(50,52)" fill="none" stroke="#F5F3FA" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 18 V-4"/>
+      <circle cx="0" cy="-13" r="11" fill="#C6F24E" stroke="none"/>
+      <path d="M0 6 L-8 -2 M0 2 L7 -5"/>
+    </g>
+  </svg>
+</template>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="container nav-in">
+    <a class="brand" href="Home.html">
+      <span class="brand-badge"><img loading="lazy" decoding="async" src="assets/logo-red2.webp" alt="BrainTree HR — Valuing People" /></span>
+      <div class="brand-name">BrainTree<span>HR</span></div>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="Home.html">Home</a>
+      <a class="nav-link" href="Careers.html">Careers</a>
+      <a class="nav-link" href="About.html">About</a>
+      <a class="nav-link" href="Blog.html">Blog</a>
+      <a class="nav-link active" href="Contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-violet" href="SignIn.html">Sign in <span class="arr">→</span></a>
+      <button class="nav-burger" id="burger" aria-label="Menu"><svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg></button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="Home.html">Home</a>
+  <a href="Careers.html">Careers</a>
+  <a href="About.html">About</a>
+  <a href="Blog.html">Blog</a>
+  <a href="Contact.html">Contact</a>
+  <a class="btn btn-violet" href="SignIn.html">Sign in →</a>
+</div>
+
+<!-- HERO -->
+<section class="phero center" style="padding-bottom:48px;">
+  <div class="container">
+    <span class="eyebrow"><span class="dot"></span>Contact Us</span>
+    <h1 style="color:var(--forest);">Let's <span class="hl serif-italic">talk.</span></h1>
+    <p>Hiring for a team? Looking for your next role? Got a question about how we work? Drop a line — a real person responds within a few hours.</p>
+  </div>
+</section>
+
+<!-- CONTACT GRID -->
+<section style="padding-bottom:96px;">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- INFO -->
+      <div class="contact-info reveal">
+        <div class="band-grid-bg"></div>
+        <div style="position:relative;z-index:2;">
+          <span class="eyebrow on-dark"><span class="dot"></span>Reach us</span>
+          <h2>Skip the form,<br />pick a channel.</h2>
+          <p>Most queries get a same-day reply. For urgent roles, mention "urgent" in the subject and we'll bump you up.</p>
+        </div>
+        <div class="contact-channels">
+          <div class="contact-channel">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 1116 0z" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="10" r="3" stroke="currentColor" stroke-width="1.8"/></svg></div>
+            <div><div class="lbl">Headquarters</div><div class="val">#19, 5th Floor, Shivashankar Plaza, Richmond Circle, Bengaluru - 560027, Karnataka, India</div></div>
+          </div>
+          <div class="contact-channel">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M4 5h16v14H4z" stroke="currentColor" stroke-width="1.8"/><path d="M4 7l8 6 8-6" stroke="currentColor" stroke-width="1.8"/></svg></div>
+            <div><div class="lbl">Email</div><div class="val">info@braintreehr.com</div></div>
+          </div>
+          <div class="contact-channel">
+            <div class="ic"><svg width="20" height="20" viewBox="0 0 24 24" fill="none"><path d="M22 16.9v3a2 2 0 01-2.2 2 19.8 19.8 0 01-8.6-3 19.5 19.5 0 01-6-6 19.8 19.8 0 01-3.1-8.7A2 2 0 014.1 2h3a2 2 0 012 1.7c.1.9.3 1.8.6 2.7a2 2 0 01-.5 2.1L8 9.6a16 16 0 006 6l1.1-1.1a2 2 0 012.1-.5c.9.3 1.8.5 2.7.6a2 2 0 011.7 2z" stroke="currentColor" stroke-width="1.8"/></svg></div>
+            <div><div class="lbl">Phone</div><div class="val">+91 9845930384</div></div>
+          </div>
+        </div>
+        <div class="online-pill">
+          <div class="row"><div class="led"></div><div class="t">Currently online</div></div>
+          <p>Our team is responding to messages right now. Average reply: 24 hours.</p>
+        </div>
+      </div>
+
+      <!-- FORM -->
+      <form class="contact-form reveal" id="contactForm">
+        <h3 style="color:var(--forest);">Send us a note</h3>
+        <p>We'll come back to you with concrete next steps — not a form letter.</p>
+        <div class="form-row">
+          <div class="form-field"><label>Your name *</label><input name="name" placeholder="Maya Sun" required /></div>
+          <div class="form-field"><label>Work email *</label><input type="email" name="email" placeholder="you@company.com" required /></div>
+        </div>
+        <div class="form-row">
+          <div class="form-field"><label>Company</label><input name="company" placeholder="Northwind Labs" /></div>
+          <div class="form-field"><label>What's this about?</label>
+            <select name="topic" id="topic">
+              <option>I want to hire</option>
+              <option>I'm looking for a job</option>
+              <option>Press inquiry</option>
+              <option>Partnership</option>
+              <option>Something else</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-field" id="budgetField">
+          <label>Approximate budget per hire</label>
+          <select name="budget">
+            <option>Under ₹50L</option>
+            <option>₹50L – ₹1 Cr</option>
+            <option>₹1 Cr – ₹2 Cr</option>
+            <option>₹2 Cr+</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="form-field"><label>Tell us a bit more</label><textarea name="message" placeholder="A few sentences on roles, timeline, or anything else useful…"></textarea></div>
+        <div class="form-foot">
+          <p>By submitting you agree to our <a href="#">privacy policy</a>.</p>
+          <button class="btn btn-primary btn-lg" type="submit" id="submitBtn">Send message <span class="arr">→</span></button>
+        </div>
+      </form>
+    </div>
+
+    <!-- FAQ -->
+    <div class="faq-strip">
+      <div class="reveal">
+        <span class="eyebrow"><span class="dot"></span>Quick Answers</span>
+        <h2 style="margin-top:18px;color:var(--forest);font-size:clamp(28px,3.4vw,40px);">Common questions</h2>
+        <p style="margin-top:12px;">Browse the full FAQ on the homepage for more.</p>
+      </div>
+      <div class="reveal">
+        <div class="faq-item"><div class="q">How long until we hear back?<span class="pm">+</span></div><div class="a"><p>Most messages get a reply within 4 working hours. Anything sent on weekends gets answered by 10am Monday IST.</p></div></div>
+        <div class="faq-item"><div class="q">Do you charge candidates?<span class="pm">+</span></div><div class="a"><p>No, ever. Our service is free for candidates. We're paid by hiring companies once a placement sticks.</p></div></div>
+        <div class="faq-item"><div class="q">Can we hire you for a single role?<span class="pm">+</span></div><div class="a"><p>Yes — we work with single-role retainers as well as embedded engagements. Tell us about the role and we'll quote.</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="pfooter">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <a class="pbrand" href="Home.html"><img loading="lazy" decoding="async" src="assets/logo-red2.webp" alt="BrainTree HR" /><div class="pbrand-name">BrainTree<span>HR</span></div></a>
+        <p class="fdesc">BrainTree HR — a recruitment partner valuing people since 2004. Search, staffing and onboarding across India and the US.</p>
+      </div>
+      <div>
+        <h5>Services</h5>
+        <div class="footer-links">
+          <a href="Contact.html">Permanent Staffing</a>
+          <a href="Contact.html">Executive Search</a>
+          <a href="Contact.html">RPO &amp; Managed Hiring</a>
+          <a href="Apply.html">Apply for Jobs</a>
+        </div>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <div class="footer-links">
+          <a href="About.html">About us</a>
+          <a href="Careers.html">Careers</a>
+          <a href="Blog.html">Blog</a>
+          <a href="Contact.html">Contact</a>
+        </div>
+      </div>
+      <div>
+        <h5>Get in touch</h5>
+        <p style="margin:0 0 14px;font-size:14px;line-height:1.55;color:rgba(245,243,250,0.6);max-width:240px;">#19, 5th Floor, Shivashankar Plaza, Richmond Circle, Bengaluru &ndash; 560027, Karnataka, India</p>
+        <div class="footer-links">
+          <a href="mailto:info@braintreehr.com">info@braintreehr.com</a>
+          <a href="tel:+919845930384">+91 9845930384</a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 BrainTree HR Consulting. Valuing People.</span>
+      <span><a href="Privacy.html">Privacy</a> · <a href="Terms.html">Terms</a> · <a href="Sitemap.html">Sitemap</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  const burger=document.getElementById('burger');
+  const mm=document.getElementById('mobileMenu');
+  if(burger){burger.addEventListener('click',()=>mm.classList.toggle('open'));mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));}
+
+  // topic → toggle budget
+  const topic=document.getElementById('topic');
+  const budgetField=document.getElementById('budgetField');
+  const syncBudget=()=>{budgetField.style.display = topic.value==='I want to hire' ? 'flex' : 'none';};
+  topic.addEventListener('change',syncBudget); syncBudget();
+
+  // form submit — wired to the real backend (BrainTree HR Backend §5.1)
+  const form=document.getElementById('contactForm');
+  const btn=document.getElementById('submitBtn');
+  const btnDefaultHTML=btn.innerHTML;
+
+  // Change this to the deployed API's real domain once Phase 4 ships.
+  const API_BASE='http://localhost:3000';
+
+  const TOPIC_MAP={
+    "I want to hire":"hire",
+    "I'm looking for a job":"job_seeker",
+    "Press inquiry":"press",
+    "Partnership":"partnership",
+    "Something else":"other"
+  };
+
+  let formError=document.getElementById('formError');
+  if(!formError){
+    formError=document.createElement('p');
+    formError.id='formError';
+    formError.style.cssText='color:#C0392B;font-size:14px;margin:0 0 12px;display:none;';
+    form.querySelector('.form-foot').before(formError);
+  }
+
+  form.addEventListener('submit',async(e)=>{
+    e.preventDefault();
+    formError.style.display='none';
+    btn.disabled=true; btn.style.opacity='0.7'; btn.innerHTML='Sending…';
+
+    const fd=new FormData(form);
+    const payload={
+      name: fd.get('name'),
+      email: fd.get('email'),
+      company: fd.get('company') || undefined,
+      topic: TOPIC_MAP[fd.get('topic')] || 'other',
+      budget_band: fd.get('topic')==='I want to hire' ? (fd.get('budget') || undefined) : undefined,
+      message: fd.get('message') || undefined,
+    };
+
+    try{
+      const res=await fetch(API_BASE+'/api/contact',{
+        method:'POST',
+        headers:{'Content-Type':'application/json'},
+        body:JSON.stringify(payload),
+      });
+      const data=await res.json();
+      if(!res.ok){
+        throw new Error(data.error || 'Something went wrong. Please try again.');
+      }
+      btn.innerHTML='✓ Message sent';
+      setTimeout(()=>{
+        btn.innerHTML=btnDefaultHTML; btn.disabled=false; btn.style.opacity='1';
+        form.reset(); syncBudget();
+      },4000);
+    }catch(err){
+      formError.textContent=err.message || 'Could not send your message — please try again.';
+      formError.style.display='block';
+      btn.innerHTML=btnDefaultHTML; btn.disabled=false; btn.style.opacity='1';
+    }
+  });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-item').forEach(item=>{
+    item.querySelector('.q').addEventListener('click',()=>item.classList.toggle('open'));
+  });
+
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:0.08});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+</script>
+<script src="skeleton-loader.js"></script>
+</body>
+</html>

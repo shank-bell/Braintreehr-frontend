@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Employee Sign In — BrainTree HR</title>
+<link rel="icon" type="image/webp" href="assets/logo-red2.webp">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="skeleton-loader.css">
+</head>
+<body>
+<div id="skelLoader" class="skel-dark">
+  <div class="skel-nav">
+    <div class="skel-brand"></div>
+    <div class="skel-navlinks">
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+      <div class="skel-navlink"></div>
+    </div>
+    <div class="skel-cta"></div>
+  </div>
+  <div class="skel-main">
+    <div class="skel-eyebrow"></div>
+    <div class="skel-h1"></div>
+    <div class="skel-h1 skel-h1-2"></div>
+    <div class="skel-p"></div>
+    <div class="skel-p short"></div>
+    <div class="skel-row">
+      <div class="skel-card"></div>
+      <div class="skel-card"></div>
+      <div class="skel-card"></div>
+    </div>
+  </div>
+</div>
+
+<template id="__bundler_thumbnail">
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <rect width="100" height="100" rx="20" fill="#6B43E8"/>
+    <g transform="translate(50,52)" fill="none" stroke="#F5F3FA" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M0 18 V-4"/>
+      <circle cx="0" cy="-13" r="11" fill="#C6F24E" stroke="none"/>
+      <path d="M0 6 L-8 -2 M0 2 L7 -5"/>
+    </g>
+  </svg>
+</template>
+
+<!-- NAV -->
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="Home.html">
+      <span class="brand-badge"><img loading="lazy" decoding="async" src="assets/logo-red2.webp" alt="BrainTree HR — Valuing People" /></span>
+      <div class="brand-name">BrainTree<span>HR</span></div>
+    </a>
+    <nav class="nav-links">
+      <a class="nav-link" href="Home.html">Home</a>
+      <a class="nav-link" href="Careers.html">Careers</a>
+      <a class="nav-link" href="About.html">About</a>
+      <a class="nav-link" href="Blog.html">Blog</a>
+      <a class="nav-link" href="Contact.html">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-violet" href="SignIn.html">Sign in <span class="arr">→</span></a>
+      <button class="nav-burger" id="burger" aria-label="Menu">
+        <svg width="20" height="14" viewBox="0 0 20 14" fill="none"><path d="M0 1h20M0 7h20M0 13h20" stroke="currentColor" stroke-width="1.6"/></svg>
+      </button>
+    </div>
+  </div>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="Home.html">Home</a>
+  <a href="Careers.html">Careers</a>
+  <a href="About.html">About</a>
+  <a href="Blog.html">Blog</a>
+  <a href="Contact.html">Contact</a>
+  <a class="btn btn-violet" href="SignIn.html">Sign in →</a>
+</div>
+
+<!-- SIGN IN -->
+<section class="signin-wrap">
+  <div class="glow v"></div>
+  <div class="signin-card">
+    <span class="eyebrow"><span class="dot"></span>Employees only</span>
+    <h2 style="margin-top:18px;">Employee sign in</h2>
+    <p class="sub">Sign in with your BrainTree HR work email to access the internal portal.</p>
+
+    <form id="signinForm" style="margin-top:26px;" novalidate>
+      <div class="field">
+        <label for="email">Work email</label>
+        <input type="email" id="email" name="email" placeholder="you@braintreehr.com" required />
+      </div>
+      <div class="field">
+        <div class="field-hint">
+          <label for="password">Password</label>
+          <a href="#">Forgot password?</a>
+        </div>
+        <input type="password" id="password" name="password" placeholder="••••••••" required />
+      </div>
+      <div id="signinError" style="display:none;font-size:13px;color:#ff8a80;margin:-4px 0 12px;"></div>
+      <button class="btn btn-violet" type="submit" id="signinBtn">Sign in <span class="arr">→</span></button>
+    </form>
+
+    <p class="signin-alt">Access is restricted to BrainTree HR employees. Trouble signing in? <a href="Contact.html">Contact IT</a>.</p>
+  </div>
+</section>
+
+<script>
+  const burger=document.getElementById('burger');
+  const mm=document.getElementById('mobileMenu');
+  if(burger){burger.addEventListener('click',()=>mm.classList.toggle('open'));mm.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>mm.classList.remove('open')));}
+
+  const form=document.getElementById('signinForm');
+  const btn=document.getElementById('signinBtn');
+  const err=document.getElementById('signinError');
+  const email=document.getElementById('email');
+  const pw=document.getElementById('password');
+
+  // Change this to the deployed admin app's real domain once Phase 4 ships.
+  const ADMIN_LOGIN_URL='http://localhost:3000/admin/login';
+
+  // This page no longer fakes authentication — real staff sign-in lives
+  // in the Next.js admin app, which has actual Supabase Auth behind it
+  // (design doc §7.1). Submitting here just hands off to the real thing
+  // rather than pretending to check a password nothing verifies.
+  form.addEventListener('submit',(e)=>{
+    e.preventDefault();
+    err.style.display='none';
+    if(!email.value.trim() || !pw.value.trim()){
+      err.textContent='Please enter your work email and password.';
+      err.style.display='block';
+      return;
+    }
+    btn.innerHTML='Redirecting to staff portal…';
+    btn.disabled=true; btn.style.opacity='0.85';
+    window.location.href = ADMIN_LOGIN_URL;
+  });
+</script>
+<script src="skeleton-loader.js"></script>
+</body>
+</html>
