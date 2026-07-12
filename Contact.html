@@ -121,6 +121,7 @@
 
       <!-- FORM -->
       <form class="contact-form reveal" id="contactForm">
+        <input type="checkbox" name="botcheck" style="display:none">
         <h3 style="color:var(--forest);">Send us a note</h3>
         <p>We'll come back to you with concrete next steps — not a form letter.</p>
         <div class="form-row">
@@ -275,6 +276,14 @@
       if(!res.ok){
         throw new Error(data.error || 'Something went wrong. Please try again.');
       }
+      try {
+        await sendFormToWeb3Forms(form, {
+          accessKey: '8eaade02-305f-4eb7-be2a-0aa9662606dc',
+          subject: `New contact message: ${TOPIC_MAP[fd.get('topic')] || 'other'}`,
+        });
+      } catch (notifyErr) {
+        console.warn('Web3Forms notification failed (message still saved):', notifyErr);
+      }
       btn.innerHTML='✓ Message sent';
       setTimeout(()=>{
         btn.innerHTML=btnDefaultHTML; btn.disabled=false; btn.style.opacity='1';
@@ -296,5 +305,6 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <script src="skeleton-loader.js"></script>
+<script src="./web3forms-plugin.js"></script>
 </body>
 </html>

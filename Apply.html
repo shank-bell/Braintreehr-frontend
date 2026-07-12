@@ -94,6 +94,7 @@
     <div class="apply-grid">
       <!-- FORM -->
       <form class="contact-form reveal" id="applyForm">
+        
         <h3 style="color:var(--forest);">Your application</h3>
         <p>Fields marked * are required. We keep your details confidential and never charge candidates.</p>
 
@@ -344,6 +345,15 @@
       }
 
       btn.innerHTML='✓ Application submitted';
+      // Notify BrainTree HR via Web3Forms (best-effort, won't block submission)
+      try {
+        await sendFormToWeb3Forms(form, {
+          accessKey: '8eaade02-305f-4eb7-be2a-0aa9662606dc',
+          subject: `New application: ${fd.get('role') || 'N/A'}`,
+        });
+      } catch (notifyErr) {
+        console.warn('Web3Forms notification failed (application still saved):', notifyErr);
+      }
       setTimeout(()=>{
         resetButton();
         form.reset();
@@ -360,5 +370,6 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <script src="skeleton-loader.js"></script>
+<script src="./web3forms-plugin.js"></script>
 </body>
 </html>

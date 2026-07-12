@@ -96,7 +96,7 @@
       <div class="field">
         <div class="field-hint">
           <label for="password">Password</label>
-          <a href="#">Forgot password?</a>
+          <a href="#" id="forgotLink">Forgot password?</a>
         </div>
         <input type="password" id="password" name="password" placeholder="••••••••" required />
       </div>
@@ -118,25 +118,53 @@
   const err=document.getElementById('signinError');
   const email=document.getElementById('email');
   const pw=document.getElementById('password');
+  const btnDefaultHTML=btn.innerHTML;
 
   // Change this to the deployed admin app's real domain once Phase 4 ships.
-  const ADMIN_LOGIN_URL='http://localhost:3000/admin/login';
+  const ADMIN_BASE='http://localhost:3000';
 
-  // This page no longer fakes authentication — real staff sign-in lives
-  // in the Next.js admin app, which has actual Supabase Auth behind it
-  // (design doc §7.1). Submitting here just hands off to the real thing
-  // rather than pretending to check a password nothing verifies.
-  form.addEventListener('submit',(e)=>{
+  // Real sign-in — calls a dedicated backend endpoint (not Supabase
+  // directly) so the resulting session cookie is set on ADMIN_BASE's own
+  // origin. IMPORTANT: this page must be served over http (Live Server,
+  // `npx serve`, etc.) — opening it via file:// cannot receive cookies at
+  // all, sign-in will silently fail no matter what.
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
     err.style.display='none';
+
     if(!email.value.trim() || !pw.value.trim()){
       err.textContent='Please enter your work email and password.';
       err.style.display='block';
       return;
     }
-    btn.innerHTML='Redirecting to staff portal…';
+
+    btn.innerHTML='Signing in…';
     btn.disabled=true; btn.style.opacity='0.85';
-    window.location.href = ADMIN_LOGIN_URL;
+
+    try {
+      const res = await fetch(ADMIN_BASE+'/api/admin/login', {
+        method:'POST',
+        credentials:'include',
+        headers:{'Content-Type':'application/json'},
+        body: JSON.stringify({ email: email.value.trim(), password: pw.value }),
+      });
+      const data = await res.json();
+      if(!res.ok){
+        throw new Error(data.error || 'Sign in failed. Please try again.');
+      }
+      btn.innerHTML='✓ Signed in — redirecting…';
+      window.location.href = ADMIN_BASE + '/admin/jobs';
+    } catch (submitErr) {
+      err.textContent = submitErr.message || 'Something went wrong — please try again.';
+      err.style.display = 'block';
+      btn.innerHTML = btnDefaultHTML;
+      btn.disabled = false; btn.style.opacity = '1';
+    }
+  });
+
+  document.getElementById('forgotLink').addEventListener('click', (e)=>{
+    e.preventDefault();
+    window.location.href = ADMIN_BASE + '/admin/forgot-password';
   });
 </script>
 <script src="skeleton-loader.js"></script>
