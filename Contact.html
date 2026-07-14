@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="pages.css">
 <link rel="stylesheet" href="skeleton-loader.css">
+<script src="config.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <div id="skelLoader" class="skel-light">
@@ -232,8 +234,8 @@
   const btn=document.getElementById('submitBtn');
   const btnDefaultHTML=btn.innerHTML;
 
-  // Change this to the deployed API's real domain once Phase 4 ships.
-  const API_BASE='http://localhost:3000';
+  // Reads from config.js — change the value there once, at deploy.
+  const API_BASE = window.BRAINTREE_API_BASE;
 
   const TOPIC_MAP={
     "I want to hire":"hire",
@@ -258,6 +260,7 @@
 
     const fd=new FormData(form);
     const payload={
+      captchaToken: (window.turnstile && turnstile.getResponse()) || '',
       name: fd.get('name'),
       email: fd.get('email'),
       company: fd.get('company') || undefined,

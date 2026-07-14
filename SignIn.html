@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <link rel="stylesheet" href="skeleton-loader.css">
+<script src="config.js"></script>
 </head>
 <body>
 <div id="skelLoader" class="skel-dark">
@@ -120,8 +121,8 @@
   const pw=document.getElementById('password');
   const btnDefaultHTML=btn.innerHTML;
 
-  // Change this to the deployed admin app's real domain once Phase 4 ships.
-  const ADMIN_BASE='http://localhost:3000';
+  // Reads from config.js — change the value there once, at deploy.
+  const ADMIN_BASE = window.BRAINTREE_API_BASE;
 
   // Real sign-in — calls a dedicated backend endpoint (not Supabase
   // directly) so the resulting session cookie is set on ADMIN_BASE's own

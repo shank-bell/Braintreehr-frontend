@@ -1,0 +1,1 @@
+window.BRAINTREE_API_BASE = "http://localhost:3000"; // change once at deploy

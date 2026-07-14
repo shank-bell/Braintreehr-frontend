@@ -10,6 +10,8 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="pages.css">
 <link rel="stylesheet" href="skeleton-loader.css">
+<script src="config.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 </head>
 <body>
 <div id="skelLoader" class="skel-light">
@@ -222,10 +224,11 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  // Config — change these once Phase 4 deploys (§5.1, §6.1).
-  // The anon/publishable key is DESIGNED to be public — safe to embed
-  // in client-side code, unlike the secret key which never appears here.
-  const API_BASE='http://localhost:3000';
+  // Config — the API base now comes from config.js (one place to change
+  // at deploy). The anon/publishable key is DESIGNED to be public — safe
+  // to embed in client-side code, unlike the secret key which never
+  // appears here.
+  const API_BASE = window.BRAINTREE_API_BASE;
   const SUPABASE_URL='https://wsulthmkwwsxnilewayk.supabase.co'; // <-- fill in
   const SUPABASE_ANON_KEY='sb_publishable_G_YonE_mbzVVx98aMiaNPQ_XMjEPdmM';          // <-- fill in
   const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
@@ -322,6 +325,7 @@
         method:'POST',
         headers:{'Content-Type':'application/json'},
         body: JSON.stringify({
+          captchaToken: (window.turnstile && turnstile.getResponse()) || '',
           full_name: fd.get('name'),
           email: fd.get('email'),
           phone: fd.get('phone'),
