@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;500;600;700;800&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="pages.css">
 <link rel="stylesheet" href="skeleton-loader.css">
+<script src="config.js"></script>
 </head>
 <body>
 <div id="skelLoader" class="skel-light">
@@ -86,17 +87,11 @@
     <p>Browse live openings across our client network, or send us your résumé — a real recruiter, not a bot, takes it from there.</p>
     <div class="search-row">
       <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style="flex-shrink:0;color:var(--ink-3)"><circle cx="8" cy="8" r="6" stroke="currentColor" stroke-width="1.6"/><path d="M13 13l3 3" stroke="currentColor" stroke-width="1.6"/></svg>
-      <input type="text" placeholder="Search roles — e.g. Backend Engineer, Bengaluru" />
-      <button class="btn btn-primary">Search</button>
+      <input type="text" id="roleSearch" placeholder="Search roles — e.g. Backend Engineer, Bengaluru" />
+      <button class="btn btn-primary" id="roleSearchBtn">Search</button>
     </div>
-    <div class="chips">
-      <span class="chip active">All</span>
-      <span class="chip">Engineering</span>
-      <span class="chip">Product</span>
-      <span class="chip">Design</span>
-      <span class="chip">Data</span>
-      <span class="chip">Sales</span>
-      <span class="chip">Operations</span>
+    <div class="chips" id="chipsRow">
+      <span class="chip active" data-dept="All">All</span>
     </div>
   </div>
 </section>
@@ -107,20 +102,11 @@
     <div class="sec-head reveal" style="max-width:none;display:flex;justify-content:space-between;align-items:flex-end;gap:24px;flex-wrap:wrap;margin-bottom:32px;">
       <div>
         <span class="eyebrow"><span class="dot"></span>Open roles</span>
-        <h2 style="margin-top:16px;">64 live openings</h2>
+        <h2 style="margin-top:16px;" id="rolesCount">Open roles</h2>
       </div>
       <a class="btn btn-ghost" href="Contact.html">Create a job alert <span class="arr">→</span></a>
     </div>
-    <div class="roles-list reveal">
-      <div class="role-row"><div class="r-title">Staff Backend Engineer</div><div class="r-meta">Engineering · Bengaluru / Hybrid</div><div class="r-pay">₹45–60 LPA · Full-time</div><a class="r-go" href="Apply.html?role=Staff%20Backend%20Engineer"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Senior Product Designer</div><div class="r-meta">Design · Remote (India)</div><div class="r-pay">₹32–46 LPA · Full-time</div><a class="r-go" href="Apply.html?role=Senior%20Product%20Designer"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Head of People</div><div class="r-meta">Operations · Bengaluru</div><div class="r-pay">₹40–55 LPA · Full-time</div><a class="r-go" href="Apply.html?role=Head%20of%20People"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Senior Data Scientist</div><div class="r-meta">Data · Hybrid</div><div class="r-pay">₹38–52 LPA · Full-time</div><a class="r-go" href="Apply.html?role=Senior%20Data%20Scientist"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Group Product Manager</div><div class="r-meta">Product · Remote</div><div class="r-pay">$120–145k · Full-time</div><a class="r-go" href="Apply.html?role=Group%20Product%20Manager"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Enterprise Account Executive</div><div class="r-meta">Sales · New Jersey, USA</div><div class="r-pay">$110–140k · Full-time</div><a class="r-go" href="Apply.html?role=Enterprise%20Account%20Executive"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">DevOps / Platform Engineer</div><div class="r-meta">Engineering · Contract</div><div class="r-pay">₹28–40 LPA · 12-month</div><a class="r-go" href="Apply.html?role=DevOps%20%2F%20Platform%20Engineer"><span class="arr">→</span></a></div>
-      <div class="role-row"><div class="r-title">Growth Marketing Lead</div><div class="r-meta">Marketing · Remote</div><div class="r-pay">$85–105k · Full-time</div><a class="r-go" href="Apply.html?role=Growth%20Marketing%20Lead"><span class="arr">→</span></a></div>
-    </div>
+    <div class="roles-list reveal" id="rolesList"></div>
   </div>
 </section>
 
@@ -231,5 +217,100 @@
   document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
 </script>
 <script src="skeleton-loader.js"></script>
+<script>
+(function () {
+  const API_BASE = window.BRAINTREE_API_BASE;
+  const rolesList   = document.getElementById('rolesList');
+  const rolesCount  = document.getElementById('rolesCount');
+  const chipsRow    = document.getElementById('chipsRow');
+  const searchInput = document.getElementById('roleSearch');
+  const searchBtn   = document.getElementById('roleSearchBtn');
+
+  let allJobs = [];
+  let activeDept = 'All';
+
+  function esc(str) {
+    return String(str).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  }
+
+  function renderChips() {
+    const depts = [...new Set(allJobs.map(j => j.department).filter(Boolean))].sort();
+    chipsRow.innerHTML = ['All', ...depts].map(d =>
+      `<span class="chip${d === activeDept ? ' active' : ''}" data-dept="${esc(d)}">${esc(d)}</span>`
+    ).join('');
+    chipsRow.querySelectorAll('.chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        activeDept = chip.dataset.dept;
+        renderChips();
+        renderJobs();
+      });
+    });
+  }
+
+  function renderJobs() {
+    const q = (searchInput.value || '').trim().toLowerCase();
+    const filtered = allJobs.filter(j => {
+      const matchesDept = activeDept === 'All' || j.department === activeDept;
+      const haystack = [j.title, j.department, j.location].filter(Boolean).join(' ').toLowerCase();
+      return matchesDept && (!q || haystack.includes(q));
+    });
+
+    if (allJobs.length === 0) {
+      rolesCount.textContent = 'No live openings right now';
+      rolesList.innerHTML = '<div class="role-row" style="grid-template-columns:1fr;"><div class="r-meta">No open roles at the moment — check back soon, or send us your résumé anyway.</div></div>';
+      return;
+    }
+
+    rolesCount.textContent = `${filtered.length} live opening${filtered.length === 1 ? '' : 's'}`;
+
+    if (filtered.length === 0) {
+      rolesList.innerHTML = '<div class="role-row" style="grid-template-columns:1fr;"><div class="r-meta">No roles match that search — try a different term or filter.</div></div>';
+      return;
+    }
+
+    rolesList.innerHTML = filtered.map(job => {
+      const meta = [job.department, job.location].filter(Boolean).join(' · ');
+      const pay  = [job.pay_range, job.employment_type].filter(Boolean).join(' · ');
+      return `<div class="role-row">
+        <div class="r-title">${esc(job.title)}</div>
+        <div class="r-meta">${esc(meta)}</div>
+        <div class="r-pay">${esc(pay)}</div>
+        <a class="r-go" href="Apply.html?role=${encodeURIComponent(job.title)}"><span class="arr">→</span></a>
+      </div>`;
+    }).join('');
+  }
+
+  function renderLoading() {
+    rolesCount.textContent = 'Loading roles…';
+    rolesList.innerHTML = Array.from({ length: 4 }).map(() =>
+      '<div class="role-row"><div class="r-title" style="opacity:.4;">Loading…</div><div class="r-meta"></div><div class="r-pay"></div><div></div></div>'
+    ).join('');
+  }
+
+  function renderError() {
+    rolesCount.textContent = 'Open roles';
+    rolesList.innerHTML = '<div class="role-row" style="grid-template-columns:1fr;"><div class="r-meta">Couldn\'t load live roles right now — please refresh, or <a href="Contact.html" style="color:var(--violet);">contact us</a> directly.</div></div>';
+  }
+
+  async function loadJobs() {
+    renderLoading();
+    try {
+      const res = await fetch(API_BASE + '/api/jobs');
+      if (!res.ok) throw new Error('bad status');
+      const data = await res.json();
+      allJobs = Array.isArray(data.jobs) ? data.jobs : [];
+      renderChips();
+      renderJobs();
+    } catch (err) {
+      renderError();
+    }
+  }
+
+  searchInput.addEventListener('input', renderJobs);
+  searchBtn.addEventListener('click', e => { e.preventDefault(); renderJobs(); });
+
+  loadJobs();
+})();
+</script>
 </body>
 </html>
